@@ -1,0 +1,27 @@
+{
+  "name": "algorithms",
+  "version": "1.0.0",
+  "description": "Common algorithms and data structures implementation in javascript/typescript",
+  "main": "./src/index.ts",
+  "scripts": {
+    "test": "jest --no-cache",
+    "tsc-check": "tsc --noEmit"
+  },
+  "keywords": [
+    "javascript",
+    "typescript",
+    "algorithms",
+    "data structures"
+  ],
+  "author": "PhelipeRocha",
+  "license": "MIT",
+  "devDependencies": {
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.5"
+  },
+  "dependencies": {
+    "@types/jest": "^26.0.20",
+    "jest": "^26.6.3",
+    "ts-jest": "^26.5.1"
+  }
+}
