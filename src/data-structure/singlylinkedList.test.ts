@@ -102,9 +102,42 @@ describe('Singly Linked List', () => {
     expect(linkedList.size).toBe(9)
   })
 
+  it('Insert item at 0 index', () => {
+    const linkedList = new SinglyLinkedList()
+    
+    const newItem = linkedList.insertAt(0, 'newItem')
+    expect(newItem?.get()).toBe('newItem')
+    expect(linkedList.getFirst().get()).toBe('newItem')
+    expect(linkedList.getLast().get()).toBe('newItem')
+    expect(linkedList.size).toBe(1)
+  })
+
+  it('Insert item at undefined index', () => {
+    const linkedList = createMockList(10)
+
+    const newItem = linkedList.insertAt(20, 'newItem')
+    expect(newItem?.get()).toBeUndefined()
+    expect(linkedList.getFirst().get()).toBe(0)
+    expect(linkedList.getLast().get()).toBe(9)
+    expect(linkedList.size).toBe(10)
+  })
+
+  it('Insert item at index', () => {
+    const linkedList = createMockList(10)
+    expect(linkedList.size).toBe(10)
+    expect(linkedList.getAt(5)?.get()).toBe(5)
+    expect(linkedList.getAt(6)?.get()).toBe(6)
+
+    const newItem = linkedList.insertAt(5, 'newItem')
+    expect(newItem?.get()).toBe('newItem')
+    expect(linkedList.size).toBe(11)
+    expect(linkedList.getAt(4)?.next?.get()).toBe('newItem')
+    expect(linkedList.getAt(5)?.get()).toBe('newItem')
+    expect(linkedList.getAt(6)?.get()).toBe(5)
+  })
+
   it.todo('Sort')
   it.todo('Merge')
-  it.todo('Insert at')
   it.todo('Remove from')
   it.todo('Remove item')
   it.todo('Index of')
