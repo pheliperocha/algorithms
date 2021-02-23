@@ -1,4 +1,4 @@
-import { SinglyLinkedList } from './singlylinkedList'
+import { SinglyLinkedList } from './singlyLinkedList'
 
 describe('Singly Linked List', () => {
   const createMockList = <T = any>(size: number): SinglyLinkedList<T> => {
