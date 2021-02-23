@@ -88,8 +88,10 @@ class SinglyLinkedList<T = any> {
   // O(n)
   pop(): ListNode<T> | undefined {
     if (this.size <= 1) {
+      const lastItem = this.head
       this.head = this.tail = new ListNode(undefined)
       this.size = 0
+      return lastItem
     }
 
     const beforeLastItem = this.getAt(this.size - 2)
@@ -111,14 +113,8 @@ class SinglyLinkedList<T = any> {
     
     const prevItem = this.getAt(index - 1)
     
-    if (prevItem === undefined) {
+    if (prevItem === undefined || !prevItem.next) {
       return undefined
-    }
-
-    if (!prevItem.next) {
-      prevItem.next = this.tail = newNode
-      this.size++
-      return newNode
     }
 
     newNode.next = prevItem.next

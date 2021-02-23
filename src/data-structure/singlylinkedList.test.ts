@@ -90,6 +90,18 @@ describe('Singly Linked List', () => {
     expect(linkedList.size).toBe(9)
   })
 
+  it('Remove first element in a list with size 1', () => {
+    const linkedList = createMockList(1)
+    expect(linkedList.getFirst().get()).toBe(0)
+    expect(linkedList.size).toBe(1)
+
+    const removedItem = linkedList.shift()
+
+    expect(removedItem?.get()).toBe(0)
+    expect(linkedList.getFirst().get()).toBeUndefined()
+    expect(linkedList.size).toBe(0)
+  })
+
   it('Remove last element', () => {
     const linkedList = createMockList(10)
     expect(linkedList.getLast().get()).toBe(9)
@@ -100,6 +112,18 @@ describe('Singly Linked List', () => {
     expect(removedItem?.get()).toBe(9)
     expect(linkedList.getLast().get()).toBe(8)
     expect(linkedList.size).toBe(9)
+  })
+
+  it('Remove last element from 1 item list', () => {
+    const linkedList = createMockList(1)
+    expect(linkedList.getLast().get()).toBe(0)
+    expect(linkedList.size).toBe(1)
+
+    const removedItem = linkedList.pop()
+
+    expect(removedItem?.get()).toBe(0)
+    expect(linkedList.getLast().get()).toBeUndefined()
+    expect(linkedList.size).toBe(0)
   })
 
   it('Insert item at 0 index', () => {
@@ -115,7 +139,7 @@ describe('Singly Linked List', () => {
   it('Insert item at undefined index', () => {
     const linkedList = createMockList(10)
 
-    const newItem = linkedList.insertAt(20, 'newItem')
+    const newItem = linkedList.insertAt(10, 'newItem')
     expect(newItem?.get()).toBeUndefined()
     expect(linkedList.getFirst().get()).toBe(0)
     expect(linkedList.getLast().get()).toBe(9)
@@ -136,7 +160,26 @@ describe('Singly Linked List', () => {
     expect(linkedList.getAt(6)?.get()).toBe(5)
   })
 
-  it.todo('Sort')
+  it('Insert item at last element', () => {
+    const linkedList = createMockList(10)
+    expect(linkedList.size).toBe(10)
+    expect(linkedList.getLast().get()).toBe(9)
+    expect(linkedList.getAt(9)?.get()).toBe(9)
+    expect(linkedList.getAt(9)?.next).toBeNull()
+    expect(linkedList.getAt(10)?.get()).toBeUndefined()
+    
+    const newItem = linkedList.insertAt(9, 'newItem')
+    
+    expect(newItem?.get()).toBe('newItem')
+    expect(linkedList.size).toBe(11)
+    expect(linkedList.getLast().get()).toBe(9)
+    expect(linkedList.getAt(8)?.next?.get()).toBe('newItem')
+    expect(linkedList.getAt(9)?.get()).toBe('newItem')
+    expect(linkedList.getAt(9)?.next?.get()).toBe(9)
+    expect(linkedList.getAt(10)?.get()).toBe(9)
+    expect(linkedList.getAt(10)?.next).toBeNull()
+  })
+
   it.todo('Merge')
   it.todo('Remove from')
   it.todo('Remove item')
