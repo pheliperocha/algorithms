@@ -179,11 +179,23 @@ describe('Singly Linked List', () => {
     expect(linkedList.getAt(10)?.get()).toBe(9)
     expect(linkedList.getAt(10)?.next).toBeNull()
   })
+  
+  it('Interate over the list', () => {
+    const linkedList = createMockList(10)
+    
+    let i = 0
+    for (const value of linkedList) {
+      expect(i).toBe(value)
+      i++
+    }
+
+    const arr = [...linkedList]
+    expect(arr).toStrictEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+  })
 
   it.todo('Merge')
   it.todo('Remove from')
   it.todo('Remove item')
   it.todo('Index of')
   it.todo('toString')
-  it.todo('Interate over the list')
 })

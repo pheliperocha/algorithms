@@ -27,6 +27,23 @@ class SinglyLinkedList<T = any> {
     }
   }
 
+  // O(n)
+  [Symbol.iterator]() {
+    let node: ListNode = this.head
+    return {
+      next: () => {
+        const value = node.get()
+        const next = node.next
+        node = (next) ? next : new ListNode(undefined)
+
+        return {
+          value: value,
+          done: (value === undefined)
+        }
+      }
+    }
+  }
+
   // O(1)
   push(data: T): number {
     const newNode = new ListNode(data)
@@ -104,6 +121,7 @@ class SinglyLinkedList<T = any> {
     return (lastItem) ? lastItem : undefined
   }
 
+  // O(n)
   insertAt(index: number, data: T): ListNode<T> | undefined {
     const newNode = new ListNode(data)
     if (index === 0) {
