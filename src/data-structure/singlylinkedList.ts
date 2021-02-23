@@ -140,6 +140,19 @@ class SinglyLinkedList<T = any> {
     this.size++
     return newNode
   }
+
+  // O(n)
+  toString(separator: string = ', '): string {
+    let node: ListNode | null = this.head
+    
+    let value = ''
+    while (node) {
+      value += (node.next) ? `${node.get()}${separator}` : node.get()
+      node = node.next
+    }
+
+    return value
+  }
 }
 
 export {

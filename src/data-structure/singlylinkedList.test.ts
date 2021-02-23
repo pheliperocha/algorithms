@@ -193,9 +193,11 @@ describe('Singly Linked List', () => {
     expect(arr).toStrictEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
   })
 
-  it.todo('Merge')
-  it.todo('Remove from')
-  it.todo('Remove item')
-  it.todo('Index of')
-  it.todo('toString')
+  it('toString', () => {
+    const linkedList = createMockList(3)
+
+    expect(`${linkedList}`).toBe('0, 1, 2')
+    expect(linkedList.toString()).toBe('0, 1, 2')
+    expect(linkedList.toString(':')).toBe('0:1:2')
+  })
 })
