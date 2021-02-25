@@ -155,7 +155,7 @@ describe('Singly Linked List', () => {
     const newItem = linkedList.insertAt(5, 'newItem')
     expect(newItem?.get()).toBe('newItem')
     expect(linkedList.size).toBe(11)
-    expect(linkedList.getAt(4)?.next?.get()).toBe('newItem')
+    expect(linkedList.getAt(4)?.getNext()?.get()).toBe('newItem')
     expect(linkedList.getAt(5)?.get()).toBe('newItem')
     expect(linkedList.getAt(6)?.get()).toBe(5)
   })
@@ -165,7 +165,7 @@ describe('Singly Linked List', () => {
     expect(linkedList.size).toBe(10)
     expect(linkedList.getLast().get()).toBe(9)
     expect(linkedList.getAt(9)?.get()).toBe(9)
-    expect(linkedList.getAt(9)?.next).toBeNull()
+    expect(linkedList.getAt(9)?.getNext()).toBeNull()
     expect(linkedList.getAt(10)?.get()).toBeUndefined()
     
     const newItem = linkedList.insertAt(9, 'newItem')
@@ -173,11 +173,11 @@ describe('Singly Linked List', () => {
     expect(newItem?.get()).toBe('newItem')
     expect(linkedList.size).toBe(11)
     expect(linkedList.getLast().get()).toBe(9)
-    expect(linkedList.getAt(8)?.next?.get()).toBe('newItem')
+    expect(linkedList.getAt(8)?.getNext()?.get()).toBe('newItem')
     expect(linkedList.getAt(9)?.get()).toBe('newItem')
-    expect(linkedList.getAt(9)?.next?.get()).toBe(9)
+    expect(linkedList.getAt(9)?.getNext()?.get()).toBe(9)
     expect(linkedList.getAt(10)?.get()).toBe(9)
-    expect(linkedList.getAt(10)?.next).toBeNull()
+    expect(linkedList.getAt(10)?.getNext()).toBeNull()
   })
   
   it('Interate over the list', () => {

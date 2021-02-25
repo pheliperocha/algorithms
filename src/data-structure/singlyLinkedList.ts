@@ -1,6 +1,6 @@
 class ListNode<T = any> {
   private data: T | null = null
-  next: ListNode<T> | null = null
+  private next: ListNode<T> | null = null
 
   constructor(data: T) {
     this.data = data
@@ -12,6 +12,18 @@ class ListNode<T = any> {
 
   set(data: T): void {
     this.data = data
+  }
+
+  getNext(): ListNode<T> | null {
+    return this.next
+  }
+
+  setNext(node: ListNode<T> | null): void {
+    this.next = node
+  }
+
+  hasNext(): boolean {
+    return !!this.next
   }
 }
 
@@ -33,7 +45,7 @@ class SinglyLinkedList<T = any> {
     return {
       next: () => {
         const value = node.get()
-        const next = node.next
+        const next = node.getNext()
         node = (next) ? next : new ListNode(undefined)
 
         return {
@@ -53,7 +65,7 @@ class SinglyLinkedList<T = any> {
       return ++this.size
     }
 
-    this.tail.next = newNode
+    this.tail.setNext(newNode)
     this.tail = newNode
     return ++this.size
   }
@@ -61,7 +73,7 @@ class SinglyLinkedList<T = any> {
   // O(1)
   unshift(data: T): number {
     const newNode = new ListNode(data)
-    newNode.next = this.head
+    newNode.setNext(this.head)
     this.head = newNode
     return ++this.size
   }
@@ -81,7 +93,7 @@ class SinglyLinkedList<T = any> {
     let node: ListNode<T> | null = this.head
     let count = 0
     while (count < index && node) {
-      node = node.next
+      node = node.getNext()
       count++
     }
 
@@ -97,7 +109,7 @@ class SinglyLinkedList<T = any> {
   // O(1)
   shift(): ListNode<T> | undefined {
     const firstItem = this.getFirst()
-    this.head = (firstItem.next) ? firstItem.next : new ListNode(undefined)
+    this.head = firstItem.getNext() || new ListNode(undefined)
     this.size--
     return firstItem
   }
@@ -114,8 +126,8 @@ class SinglyLinkedList<T = any> {
     const beforeLastItem = this.getAt(this.size - 2)
     if (!beforeLastItem) return undefined
 
-    const lastItem = beforeLastItem.next
-    beforeLastItem.next = null
+    const lastItem = beforeLastItem.getNext()
+    beforeLastItem.setNext(null)
     this.tail = beforeLastItem
     this.size--
     return (lastItem) ? lastItem : undefined
@@ -131,12 +143,12 @@ class SinglyLinkedList<T = any> {
     
     const prevItem = this.getAt(index - 1)
     
-    if (prevItem === undefined || !prevItem.next) {
+    if (prevItem === undefined || !prevItem.getNext()) {
       return undefined
     }
 
-    newNode.next = prevItem.next
-    prevItem.next = newNode
+    newNode.setNext(prevItem.getNext())
+    prevItem.setNext(newNode)
     this.size++
     return newNode
   }
@@ -147,8 +159,8 @@ class SinglyLinkedList<T = any> {
     
     let value = ''
     while (node) {
-      value += (node.next) ? `${node.get()}${separator}` : node.get()
-      node = node.next
+      value += (node.hasNext()) ? `${node.get()}${separator}` : node.get()
+      node = node.getNext()
     }
 
     return value
