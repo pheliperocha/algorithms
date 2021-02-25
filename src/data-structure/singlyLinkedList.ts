@@ -28,7 +28,7 @@ class ListNode<T = any> {
 }
 
 class SinglyLinkedList<T = any> {
-  size: number = 0
+  private size: number = 0
   private head: ListNode = new ListNode(undefined)
   private tail: ListNode = this.head
 
@@ -37,6 +37,10 @@ class SinglyLinkedList<T = any> {
       this.head = this.tail = new ListNode(data)
       this.size++
     }
+  }
+
+  length(): number {
+    return this.size
   }
 
   // O(n)

@@ -15,7 +15,7 @@ describe('Singly Linked List', () => {
   it('Create a empty', () => {
     const linkedList = new SinglyLinkedList()
 
-    expect(linkedList.size).toBe(0)
+    expect(linkedList.length()).toBe(0)
     expect(linkedList.getFirst().get()).toBeUndefined()
   })
 
@@ -23,7 +23,7 @@ describe('Singly Linked List', () => {
     const value = 'mockValue'
     const linkedList = new SinglyLinkedList(value)
 
-    expect(linkedList.size).toBe(1)
+    expect(linkedList.length()).toBe(1)
     expect(linkedList.getFirst()?.get()).toBe(value)
   })
 
@@ -33,7 +33,7 @@ describe('Singly Linked List', () => {
     const linkedList = createMockList(10)
     const size = linkedList.push(lastValue)
 
-    expect(linkedList.size).toBe(11)
+    expect(linkedList.length()).toBe(11)
     expect(size).toBe(11)
     expect(linkedList.getLast()?.get()).toBe(lastValue)
   })
@@ -44,17 +44,17 @@ describe('Singly Linked List', () => {
     const firstValue = 'mockValue'
     linkedList.unshift(firstValue)
 
-    expect(linkedList.size).toBe(11)
+    expect(linkedList.length()).toBe(11)
     expect(linkedList.getFirst().get()).toBe(firstValue)
   })
 
   it('Clear list', () => {
     const linkedList = createMockList(10)
-    expect(linkedList.size).toBe(10)
+    expect(linkedList.length()).toBe(10)
 
     linkedList.clear()
 
-    expect(linkedList.size).toBe(0)
+    expect(linkedList.length()).toBe(0)
     expect(linkedList.getFirst().get()).toBeUndefined()
     expect(linkedList.getLast().get()).toBeUndefined()
   })
@@ -81,49 +81,49 @@ describe('Singly Linked List', () => {
   it('Remove first element', () => {
     const linkedList = createMockList(10)
     expect(linkedList.getFirst().get()).toBe(0)
-    expect(linkedList.size).toBe(10)
+    expect(linkedList.length()).toBe(10)
 
     const removedItem = linkedList.shift()
 
     expect(removedItem?.get()).toBe(0)
     expect(linkedList.getFirst().get()).toBe(1)
-    expect(linkedList.size).toBe(9)
+    expect(linkedList.length()).toBe(9)
   })
 
   it('Remove first element in a list with size 1', () => {
     const linkedList = createMockList(1)
     expect(linkedList.getFirst().get()).toBe(0)
-    expect(linkedList.size).toBe(1)
+    expect(linkedList.length()).toBe(1)
 
     const removedItem = linkedList.shift()
 
     expect(removedItem?.get()).toBe(0)
     expect(linkedList.getFirst().get()).toBeUndefined()
-    expect(linkedList.size).toBe(0)
+    expect(linkedList.length()).toBe(0)
   })
 
   it('Remove last element', () => {
     const linkedList = createMockList(10)
     expect(linkedList.getLast().get()).toBe(9)
-    expect(linkedList.size).toBe(10)
+    expect(linkedList.length()).toBe(10)
 
     const removedItem = linkedList.pop()
 
     expect(removedItem?.get()).toBe(9)
     expect(linkedList.getLast().get()).toBe(8)
-    expect(linkedList.size).toBe(9)
+    expect(linkedList.length()).toBe(9)
   })
 
   it('Remove last element from 1 item list', () => {
     const linkedList = createMockList(1)
     expect(linkedList.getLast().get()).toBe(0)
-    expect(linkedList.size).toBe(1)
+    expect(linkedList.length()).toBe(1)
 
     const removedItem = linkedList.pop()
 
     expect(removedItem?.get()).toBe(0)
     expect(linkedList.getLast().get()).toBeUndefined()
-    expect(linkedList.size).toBe(0)
+    expect(linkedList.length()).toBe(0)
   })
 
   it('Insert item at 0 index', () => {
@@ -133,7 +133,7 @@ describe('Singly Linked List', () => {
     expect(newItem?.get()).toBe('newItem')
     expect(linkedList.getFirst().get()).toBe('newItem')
     expect(linkedList.getLast().get()).toBe('newItem')
-    expect(linkedList.size).toBe(1)
+    expect(linkedList.length()).toBe(1)
   })
 
   it('Insert item at undefined index', () => {
@@ -143,18 +143,18 @@ describe('Singly Linked List', () => {
     expect(newItem?.get()).toBeUndefined()
     expect(linkedList.getFirst().get()).toBe(0)
     expect(linkedList.getLast().get()).toBe(9)
-    expect(linkedList.size).toBe(10)
+    expect(linkedList.length()).toBe(10)
   })
 
   it('Insert item at index', () => {
     const linkedList = createMockList(10)
-    expect(linkedList.size).toBe(10)
+    expect(linkedList.length()).toBe(10)
     expect(linkedList.getAt(5)?.get()).toBe(5)
     expect(linkedList.getAt(6)?.get()).toBe(6)
 
     const newItem = linkedList.insertAt(5, 'newItem')
     expect(newItem?.get()).toBe('newItem')
-    expect(linkedList.size).toBe(11)
+    expect(linkedList.length()).toBe(11)
     expect(linkedList.getAt(4)?.getNext()?.get()).toBe('newItem')
     expect(linkedList.getAt(5)?.get()).toBe('newItem')
     expect(linkedList.getAt(6)?.get()).toBe(5)
@@ -162,7 +162,7 @@ describe('Singly Linked List', () => {
 
   it('Insert item at last element', () => {
     const linkedList = createMockList(10)
-    expect(linkedList.size).toBe(10)
+    expect(linkedList.length()).toBe(10)
     expect(linkedList.getLast().get()).toBe(9)
     expect(linkedList.getAt(9)?.get()).toBe(9)
     expect(linkedList.getAt(9)?.getNext()).toBeNull()
@@ -171,7 +171,7 @@ describe('Singly Linked List', () => {
     const newItem = linkedList.insertAt(9, 'newItem')
     
     expect(newItem?.get()).toBe('newItem')
-    expect(linkedList.size).toBe(11)
+    expect(linkedList.length()).toBe(11)
     expect(linkedList.getLast().get()).toBe(9)
     expect(linkedList.getAt(8)?.getNext()?.get()).toBe('newItem')
     expect(linkedList.getAt(9)?.get()).toBe('newItem')
