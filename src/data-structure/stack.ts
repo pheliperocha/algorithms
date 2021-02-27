@@ -3,8 +3,8 @@ import { SinglyLinkedList } from './singlyLinkedList'
 export class Stack<T = any> {
   private list: SinglyLinkedList<T>
 
-  constructor(data: T | null = null){
-    this.list = new SinglyLinkedList(data)
+  constructor(...data: T[]){
+    this.list = new SinglyLinkedList(...data.reverse())
   }
 
   // O(1)

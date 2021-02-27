@@ -28,9 +28,9 @@ describe('Singly Linked List', () => {
   })
 
   it('Appends new item, and returns the new size', () => {
-    const lastValue = 'mockValue'
+    const lastValue = 999
 
-    const linkedList = createMockList(10)
+    const linkedList = new SinglyLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
     const size = linkedList.push(lastValue)
 
     expect(linkedList.length()).toBe(11)
@@ -39,9 +39,9 @@ describe('Singly Linked List', () => {
   })
 
   it('Inserts new item at the start', () => {
-    const linkedList = createMockList(10)
+    const linkedList = new SinglyLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
     
-    const firstValue = 'mockValue'
+    const firstValue = 999
     linkedList.unshift(firstValue)
 
     expect(linkedList.length()).toBe(11)
@@ -49,7 +49,7 @@ describe('Singly Linked List', () => {
   })
 
   it('Clear list', () => {
-    const linkedList = createMockList(10)
+    const linkedList = new SinglyLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
     expect(linkedList.length()).toBe(10)
 
     linkedList.clear()
@@ -60,26 +60,26 @@ describe('Singly Linked List', () => {
   })
 
   it('Get item at index', () => {
-    const linkedList = createMockList(10)
+    const linkedList = new SinglyLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
     const item = linkedList.getAt(3)
     expect(item?.get()).toBe(3)
   })
 
   it('Return undefined for get item at index not populated', () => {
-    const linkedList = createMockList(10)
+    const linkedList = new SinglyLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
     const item = linkedList.getAt(100)
     expect(item).toBeUndefined()
   })
 
   it('Update item at index', () => {
-    const linkedList = createMockList(10)
+    const linkedList = new SinglyLinkedList<number | string>(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
     const item = linkedList.getAt(5)
     item?.set('Updated')
     expect(item?.get()).toBe('Updated')
   })
 
   it('Remove first element', () => {
-    const linkedList = createMockList(10)
+    const linkedList = new SinglyLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
     expect(linkedList.getFirst().get()).toBe(0)
     expect(linkedList.length()).toBe(10)
 
@@ -103,7 +103,7 @@ describe('Singly Linked List', () => {
   })
 
   it('Remove last element', () => {
-    const linkedList = createMockList(10)
+    const linkedList = new SinglyLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
     expect(linkedList.getLast().get()).toBe(9)
     expect(linkedList.length()).toBe(10)
 
@@ -137,9 +137,9 @@ describe('Singly Linked List', () => {
   })
 
   it('Insert item at undefined index', () => {
-    const linkedList = createMockList(10)
+    const linkedList = new SinglyLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
 
-    const newItem = linkedList.insertAt(10, 'newItem')
+    const newItem = linkedList.insertAt(10, 999)
     expect(newItem?.get()).toBeUndefined()
     expect(linkedList.getFirst().get()).toBe(0)
     expect(linkedList.getLast().get()).toBe(9)
@@ -147,41 +147,41 @@ describe('Singly Linked List', () => {
   })
 
   it('Insert item at index', () => {
-    const linkedList = createMockList(10)
+    const linkedList = new SinglyLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
     expect(linkedList.length()).toBe(10)
     expect(linkedList.getAt(5)?.get()).toBe(5)
     expect(linkedList.getAt(6)?.get()).toBe(6)
 
-    const newItem = linkedList.insertAt(5, 'newItem')
-    expect(newItem?.get()).toBe('newItem')
+    const newItem = linkedList.insertAt(5, 999)
+    expect(newItem?.get()).toBe(999)
     expect(linkedList.length()).toBe(11)
-    expect(linkedList.getAt(4)?.getNext()?.get()).toBe('newItem')
-    expect(linkedList.getAt(5)?.get()).toBe('newItem')
+    expect(linkedList.getAt(4)?.getNext()?.get()).toBe(999)
+    expect(linkedList.getAt(5)?.get()).toBe(999)
     expect(linkedList.getAt(6)?.get()).toBe(5)
   })
 
   it('Insert item at last element', () => {
-    const linkedList = createMockList(10)
+    const linkedList = new SinglyLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
     expect(linkedList.length()).toBe(10)
     expect(linkedList.getLast().get()).toBe(9)
     expect(linkedList.getAt(9)?.get()).toBe(9)
     expect(linkedList.getAt(9)?.getNext()).toBeNull()
     expect(linkedList.getAt(10)?.get()).toBeUndefined()
     
-    const newItem = linkedList.insertAt(9, 'newItem')
+    const newItem = linkedList.insertAt(9, 999)
     
-    expect(newItem?.get()).toBe('newItem')
+    expect(newItem?.get()).toBe(999)
     expect(linkedList.length()).toBe(11)
     expect(linkedList.getLast().get()).toBe(9)
-    expect(linkedList.getAt(8)?.getNext()?.get()).toBe('newItem')
-    expect(linkedList.getAt(9)?.get()).toBe('newItem')
+    expect(linkedList.getAt(8)?.getNext()?.get()).toBe(999)
+    expect(linkedList.getAt(9)?.get()).toBe(999)
     expect(linkedList.getAt(9)?.getNext()?.get()).toBe(9)
     expect(linkedList.getAt(10)?.get()).toBe(9)
     expect(linkedList.getAt(10)?.getNext()).toBeNull()
   })
   
   it('Interate over the list', () => {
-    const linkedList = createMockList(10)
+    const linkedList = new SinglyLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
     
     let i = 0
     for (const value of linkedList) {

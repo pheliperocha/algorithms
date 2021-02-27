@@ -32,10 +32,9 @@ class SinglyLinkedList<T = any> {
   private head: ListNode = new ListNode(undefined)
   private tail: ListNode = this.head
 
-  constructor(data: T | null = null) {
-    if (data) {
-      this.head = this.tail = new ListNode(data)
-      this.size++
+  constructor(...data: T[]) {
+    for (const item of data) {
+      this.push(item)
     }
   }
 
