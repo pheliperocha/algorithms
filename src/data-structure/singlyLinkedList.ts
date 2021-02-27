@@ -39,6 +39,7 @@ class SinglyLinkedList<T = any> {
     }
   }
 
+  // O(1)
   length(): number {
     return this.size
   }
