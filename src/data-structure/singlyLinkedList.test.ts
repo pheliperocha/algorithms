@@ -12,14 +12,14 @@ describe('Singly Linked List', () => {
     return linkedList
   }
 
-  it('Create a empty', () => {
+  it('Should create a empty', () => {
     const linkedList = new SinglyLinkedList()
 
     expect(linkedList.length()).toBe(0)
     expect(linkedList.getFirst().get()).toBeUndefined()
   })
 
-  it('Create with a node', () => {
+  it('Should create with a node', () => {
     const value = 'mockValue'
     const linkedList = new SinglyLinkedList(value)
 
@@ -27,7 +27,7 @@ describe('Singly Linked List', () => {
     expect(linkedList.getFirst()?.get()).toBe(value)
   })
 
-  it('Appends new item, and returns the new size', () => {
+  it('Should appends new item, and returns the new size', () => {
     const lastValue = 999
 
     const linkedList = new SinglyLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
@@ -38,7 +38,7 @@ describe('Singly Linked List', () => {
     expect(linkedList.getLast()?.get()).toBe(lastValue)
   })
 
-  it('Inserts new item at the start', () => {
+  it('Should inserts new item at the start', () => {
     const linkedList = new SinglyLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
     
     const firstValue = 999
@@ -48,7 +48,7 @@ describe('Singly Linked List', () => {
     expect(linkedList.getFirst().get()).toBe(firstValue)
   })
 
-  it('Clear list', () => {
+  it('Should clear list', () => {
     const linkedList = new SinglyLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
     expect(linkedList.length()).toBe(10)
 
@@ -59,26 +59,26 @@ describe('Singly Linked List', () => {
     expect(linkedList.getLast().get()).toBeUndefined()
   })
 
-  it('Get item at index', () => {
+  it('Should get item at index', () => {
     const linkedList = new SinglyLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
     const item = linkedList.getAt(3)
     expect(item?.get()).toBe(3)
   })
 
-  it('Return undefined for get item at index not populated', () => {
+  it('Should return undefined for get item at index not populated', () => {
     const linkedList = new SinglyLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
     const item = linkedList.getAt(100)
     expect(item).toBeUndefined()
   })
 
-  it('Update item at index', () => {
+  it('Should update item at index', () => {
     const linkedList = new SinglyLinkedList<number | string>(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
     const item = linkedList.getAt(5)
     item?.set('Updated')
     expect(item?.get()).toBe('Updated')
   })
 
-  it('Remove first element', () => {
+  it('Should remove first element', () => {
     const linkedList = new SinglyLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
     expect(linkedList.getFirst().get()).toBe(0)
     expect(linkedList.length()).toBe(10)
@@ -90,7 +90,7 @@ describe('Singly Linked List', () => {
     expect(linkedList.length()).toBe(9)
   })
 
-  it('Remove first element in a list with size 1', () => {
+  it('Should remove first element in a list with size 1', () => {
     const linkedList = createMockList(1)
     expect(linkedList.getFirst().get()).toBe(0)
     expect(linkedList.length()).toBe(1)
@@ -102,7 +102,7 @@ describe('Singly Linked List', () => {
     expect(linkedList.length()).toBe(0)
   })
 
-  it('Remove last element', () => {
+  it('Should remove last element', () => {
     const linkedList = new SinglyLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
     expect(linkedList.getLast().get()).toBe(9)
     expect(linkedList.length()).toBe(10)
@@ -114,7 +114,7 @@ describe('Singly Linked List', () => {
     expect(linkedList.length()).toBe(9)
   })
 
-  it('Remove last element from 1 item list', () => {
+  it('Should remove last element from 1 item list', () => {
     const linkedList = createMockList(1)
     expect(linkedList.getLast().get()).toBe(0)
     expect(linkedList.length()).toBe(1)
@@ -126,7 +126,7 @@ describe('Singly Linked List', () => {
     expect(linkedList.length()).toBe(0)
   })
 
-  it('Insert item at 0 index', () => {
+  it('Should insert item at 0 index', () => {
     const linkedList = new SinglyLinkedList()
     
     const newItem = linkedList.insertAt(0, 'newItem')
@@ -136,7 +136,7 @@ describe('Singly Linked List', () => {
     expect(linkedList.length()).toBe(1)
   })
 
-  it('Insert item at undefined index', () => {
+  it('Should insert item at undefined index', () => {
     const linkedList = new SinglyLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
 
     const newItem = linkedList.insertAt(10, 999)
@@ -146,7 +146,7 @@ describe('Singly Linked List', () => {
     expect(linkedList.length()).toBe(10)
   })
 
-  it('Insert item at index', () => {
+  it('Should insert item at index', () => {
     const linkedList = new SinglyLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
     expect(linkedList.length()).toBe(10)
     expect(linkedList.getAt(5)?.get()).toBe(5)
@@ -160,7 +160,7 @@ describe('Singly Linked List', () => {
     expect(linkedList.getAt(6)?.get()).toBe(5)
   })
 
-  it('Insert item at last element', () => {
+  it('Should insert item at last element', () => {
     const linkedList = new SinglyLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
     expect(linkedList.length()).toBe(10)
     expect(linkedList.getLast().get()).toBe(9)
@@ -180,7 +180,7 @@ describe('Singly Linked List', () => {
     expect(linkedList.getAt(10)?.getNext()).toBeNull()
   })
   
-  it('Interate over the list', () => {
+  it('Should interate over the list with for...of...', () => {
     const linkedList = new SinglyLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
     
     let i = 0
@@ -188,16 +188,26 @@ describe('Singly Linked List', () => {
       expect(i).toBe(value)
       i++
     }
+  })
 
+  it('Should interate over the list with spread operator', () => {
+    const linkedList = new SinglyLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
     const arr = [...linkedList]
     expect(arr).toStrictEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
   })
 
-  it('toString', () => {
+  it('Should convert to string with comman separator', () => {
     const linkedList = createMockList(3)
-
-    expect(`${linkedList}`).toBe('0, 1, 2')
     expect(linkedList.toString()).toBe('0, 1, 2')
+  })
+
+  it('Should convert to string with comman separator with template literals', () => {
+    const linkedList = createMockList(3)
+    expect(`${linkedList}`).toBe('0, 1, 2')
+  })
+
+  it('Should convert to string with : separator', () => {
+    const linkedList = createMockList(3)
     expect(linkedList.toString(':')).toBe('0:1:2')
   })
 })
