@@ -12,7 +12,10 @@ export class Queue<T = any> {
     return this.list.length()
   }
 
-  enqueue() { }
+  enqueue(data: T): number {
+    return this.list.push(data)
+  }
+
   dequeue() { }
   peek() {}
 }

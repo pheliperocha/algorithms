@@ -16,3 +16,19 @@ describe('Constructor and lenght', () => {
     expect(queue.length()).toBe(5)
   })
 })
+
+describe('enqueue', () => {
+  it('Should enqueue a new item in a empty queue', () => {
+    const queue = new Queue()
+    expect(queue.length()).toBe(0)
+    queue.enqueue('New item')
+    expect(queue.length()).toBe(1)
+  })
+
+  it('Should enqueue a new item with populated queue', () => {
+    const queue = new Queue('First', 'Second', 'Third')
+    expect(queue.length()).toBe(3)
+    queue.enqueue('New item')
+    expect(queue.length()).toBe(4)
+  })
+})
