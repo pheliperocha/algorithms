@@ -3,8 +3,9 @@ import { SinglyLinkedList } from './singlyLinkedList'
 export class Queue<T = any> {
   private list: SinglyLinkedList<T>
 
+  // O(n)
   constructor(...data: T[]) {
-    this.list = new SinglyLinkedList(...data)
+    this.list = new SinglyLinkedList(...data.reverse())
   }
 
   // O(1)
@@ -16,6 +17,9 @@ export class Queue<T = any> {
     return this.list.push(data)
   }
 
-  dequeue() { }
+  dequeue(): T | undefined {
+    return this.list.pop()!.get()
+  }
+
   peek() {}
 }

@@ -1,12 +1,12 @@
 class ListNode<T = any> {
-  private data: T | null = null
-  private next: ListNode<T> | null = null
+  private data?: T
+  private next?: ListNode<T>
 
   constructor(data: T) {
     this.data = data
   }
 
-  get(): T | null {
+  get(): T | undefined {
     return this.data
   }
 
@@ -14,11 +14,11 @@ class ListNode<T = any> {
     this.data = data
   }
 
-  getNext(): ListNode<T> | null {
+  getNext(): ListNode<T> | undefined {
     return this.next
   }
 
-  setNext(node: ListNode<T> | null): void {
+  setNext(node: ListNode<T> | undefined): void {
     this.next = node
   }
 
@@ -32,6 +32,7 @@ class SinglyLinkedList<T = any> {
   private head: ListNode = new ListNode(undefined)
   private tail: ListNode = this.head
 
+  // O(n)
   constructor(...data: T[]) {
     for (const item of data) {
       this.push(item)
@@ -94,7 +95,7 @@ class SinglyLinkedList<T = any> {
 
   // O(n)
   getAt(index: number): ListNode<T> | undefined {
-    let node: ListNode<T> | null = this.head
+    let node: ListNode<T> | undefined = this.head
     let count = 0
     while (count < index && node) {
       node = node.getNext()
@@ -131,7 +132,7 @@ class SinglyLinkedList<T = any> {
     if (!beforeLastItem) return undefined
 
     const lastItem = beforeLastItem.getNext()
-    beforeLastItem.setNext(null)
+    beforeLastItem.setNext(undefined)
     this.tail = beforeLastItem
     this.size--
     return (lastItem) ? lastItem : undefined
@@ -159,7 +160,7 @@ class SinglyLinkedList<T = any> {
 
   // O(n)
   toString(separator: string = ', '): string {
-    let node: ListNode | null = this.head
+    let node: ListNode | undefined = this.head
     
     let value = ''
     while (node) {

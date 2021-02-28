@@ -165,7 +165,7 @@ describe('Singly Linked List', () => {
     expect(linkedList.length()).toBe(10)
     expect(linkedList.getLast().get()).toBe(9)
     expect(linkedList.getAt(9)?.get()).toBe(9)
-    expect(linkedList.getAt(9)?.getNext()).toBeNull()
+    expect(linkedList.getAt(9)?.getNext()).toBeUndefined()
     expect(linkedList.getAt(10)?.get()).toBeUndefined()
     
     const newItem = linkedList.insertAt(9, 999)
@@ -177,7 +177,7 @@ describe('Singly Linked List', () => {
     expect(linkedList.getAt(9)?.get()).toBe(999)
     expect(linkedList.getAt(9)?.getNext()?.get()).toBe(9)
     expect(linkedList.getAt(10)?.get()).toBe(9)
-    expect(linkedList.getAt(10)?.getNext()).toBeNull()
+    expect(linkedList.getAt(10)?.getNext()).toBeUndefined()
   })
   
   it('Should interate over the list with for...of...', () => {

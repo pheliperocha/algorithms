@@ -32,3 +32,18 @@ describe('enqueue', () => {
     expect(queue.length()).toBe(4)
   })
 })
+
+describe.only('Dequeue', () => {
+  it('Should return undefined when dequeue a empty queue', () => {
+    const queue = new Queue()
+    const item = queue.dequeue()
+    expect(item).toBeUndefined()
+  })
+
+  it('Should return item when dequeue', () => {
+    const queue = new Queue(1, 2, 3)
+    const item = queue.dequeue()
+    expect(item).toBe(1)
+    expect(queue.length()).toBe(2)
+  })
+})
