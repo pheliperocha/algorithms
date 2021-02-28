@@ -5,7 +5,7 @@ export class Queue<T = any> {
 
   // O(n)
   constructor(...data: T[]) {
-    this.list = new SinglyLinkedList(...data.reverse())
+    this.list = new SinglyLinkedList(...data)
   }
 
   // O(1)
@@ -13,13 +13,18 @@ export class Queue<T = any> {
     return this.list.length()
   }
 
+  // O(1)
   enqueue(data: T): number {
     return this.list.push(data)
   }
 
+  // O(1)
   dequeue(): T | undefined {
-    return this.list.pop()!.get()
+    return this.list.shift()!.get()
   }
 
-  peek() {}
+  // O(1)
+  peek(): T | undefined {
+    return this.list.getFirst().get()
+  }
 }
