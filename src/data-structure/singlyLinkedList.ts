@@ -170,6 +170,21 @@ class SinglyLinkedList<T = any> {
 
     return value
   }
+
+  // O(n)
+  find(predicate: (value: T) => boolean): ListNode<T> | undefined {
+    let currentNode: ListNode<T> | undefined = this.head
+
+    while (currentNode) {
+      const data = currentNode!.get()
+      if (data === undefined || predicate(data)) {
+        break
+      }
+      currentNode = currentNode.getNext()
+    }
+
+    return currentNode
+  }
 }
 
 export {

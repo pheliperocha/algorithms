@@ -210,4 +210,28 @@ describe('Singly Linked List', () => {
     const linkedList = createMockList(3)
     expect(linkedList.toString(':')).toBe('0:1:2')
   })
+
+  it('Should find the first node', () => {
+    const linkedList = createMockList<number>(30)
+    const result = linkedList.find(_ => {
+      return true
+    })
+
+    expect(result!.get()).toBe(0)
+  })
+
+  it('Should not find any node', () => {
+    const linkedList = createMockList<number>(30)
+    const result = linkedList.find(_ => {
+      return false
+    })
+
+    expect(result).toBeUndefined()
+  })
+
+  it('Should find a node by the predicator', () => {
+    const linkedList = createMockList<number>(30)
+    const result = linkedList.find((value: number) => (value === 15))
+    expect(result?.get()).toBe(15)
+  })
 })
