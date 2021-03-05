@@ -18,8 +18,8 @@ describe('HashTable', () => {
     { key: 'Good morning, Vietnam!', value: 'Good morning, Vietnam!' }, //
   ]
 
-  const createPopulatedHashTable = (): HashTable<string> => {
-    const hashTable = new HashTable<string>()
+  const createPopulatedHashTable = (bucketSize?: number): HashTable<string> => {
+    const hashTable = new HashTable<string>(bucketSize)
 
     for (const { key, value } of KEYS) {
       hashTable.add(key, value)
@@ -92,6 +92,24 @@ describe('HashTable', () => {
       expect(hashTable.get(KEYS[3].key)).toBe(KEYS[3].value)
       expect(hashTable.get(KEYS[7].key)).toBe(KEYS[7].value)
       expect(hashTable.get(KEYS[13].key)).toBeUndefined()
+    })
+  })
+
+  describe('Remove', () => {
+    it('Should return false with non-exist key', () => {
+      const hashTable = createPopulatedHashTable()
+      expect(hashTable.remove('Secret key')).toBe(false)
+    })
+
+    it('Should remove a element by key', () => {
+      const hashTable = createPopulatedHashTable(3)
+      expect(hashTable.length).toBe(14)
+      expect(hashTable.get(KEYS[9].key)).toBe(KEYS[9].value)
+
+      const removed = hashTable.remove(KEYS[9].key)
+      expect(removed).toBe(true)
+      expect(hashTable.length).toBe(13)
+      expect(hashTable.get(KEYS[9].key)).toBeUndefined()
     })
   })
 

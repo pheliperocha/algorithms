@@ -56,13 +56,22 @@ export class HashTable<T> {
   get(key: string): T | undefined {
     const hash = this.hash(key)
 
-    if (!this.bucket[hash]) {
-      return undefined
-    }
+    if (!this.bucket[hash]) return undefined
 
     const result = this.bucket[hash].find(node => node.key === key)
     return result?.get()?.data
   }
 
-  remove() {}
+  // O(1)
+  remove(key: string): boolean {
+    const hash = this.hash(key)
+
+    if (!this.bucket[hash]) return false
+
+    const currentSize = this.bucket[hash].length()
+    const newSize = this.bucket[hash].delete(value => value.key === key)
+    const changed = currentSize - newSize !== 0
+    if (changed) --this._length
+    return changed
+  }
 }
