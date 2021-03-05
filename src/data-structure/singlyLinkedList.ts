@@ -185,6 +185,48 @@ class SinglyLinkedList<T = any> {
 
     return currentNode
   }
+
+  // O(n)
+  deleteAt(index: number): number | undefined {
+    if (index === 0) {
+      this.shift()
+      return this.size
+    }
+
+    if (index === this.size - 1) {
+      this.pop()
+      return this.size
+    }
+
+    const previousNode = this.getAt(index - 1)
+
+    if (previousNode === undefined) return undefined
+
+    const nodeToDelete = previousNode?.getNext()
+    previousNode?.setNext(nodeToDelete?.getNext())
+    return --this.size
+  }
+
+  // O(n)
+  delete(predicate: (value: T) => boolean): number {
+    if (this.size <= 0) return this.size
+
+    let currentNode: ListNode<T> | undefined = this.head
+    const newList = new SinglyLinkedList()
+
+    while (currentNode) {
+      const data = currentNode.get()
+      if (data !== undefined && !predicate(data)) newList.push(data)
+      currentNode = currentNode.getNext()
+    }
+
+    this.head = newList.head
+    this.tail = newList.tail
+    this.size = newList.size
+    newList.clear()
+
+    return this.size
+  }
 }
 
 export {

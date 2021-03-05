@@ -102,7 +102,7 @@ describe('Singly Linked List', () => {
     expect(linkedList.length()).toBe(0)
   })
 
-  it('Should remove last element', () => {
+  it('Should remove last element and return it', () => {
     const linkedList = new SinglyLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
     expect(linkedList.getLast().get()).toBe(9)
     expect(linkedList.length()).toBe(10)
@@ -233,5 +233,79 @@ describe('Singly Linked List', () => {
     const linkedList = createMockList<number>(30)
     const result = linkedList.find((value: number) => (value === 15))
     expect(result?.get()).toBe(15)
+  })
+
+  it('Should delete a node by index', () => {
+    const linkedList = createMockList<number>(30)
+
+    const result = linkedList.deleteAt(15)
+    expect(result).toBe(29)
+    expect(linkedList.length()).toBe(29)
+    expect(linkedList.getAt(14)?.getNext()?.get()).toBe(16)
+    expect(linkedList.getAt(15)?.get()).toBe(16)
+  })
+
+  it('Should return undefined when trying to deleteAt a undefined index', () => {
+    const linkedList = createMockList<number>(30)
+
+    const result = linkedList.deleteAt(40)
+    expect(result).toBeUndefined()
+    expect(linkedList.length()).toBe(30)
+  })
+
+  it('Should corretly deleteAt a head node', () => {
+    const linkedList = createMockList<number>(30)
+
+    const result = linkedList.deleteAt(0)
+    expect(result).toBe(29)
+    expect(linkedList.length()).toBe(29)
+    expect(linkedList.getFirst().get()).toBe(1)
+    expect(linkedList.getFirst().getNext()?.get()).toBe(2)
+  })
+
+  it('Should corretly deleteAt the tail node', () => {
+    const linkedList = createMockList<number>(30)
+    expect(linkedList.getAt(29)?.get()).toBe(29)
+    
+    const result = linkedList.deleteAt(29)
+    expect(result).toBe(29)
+    expect(linkedList.length()).toBe(29)
+    
+    expect(linkedList.getAt(29)).toBeUndefined()
+    expect(linkedList.getAt(28)?.get()).toBe(28)
+    expect(linkedList.getAt(27)?.getNext()?.get()).toBe(28)
+    expect(linkedList.getLast().get()).toBe(28)
+  })
+
+  it('Should return 0 when delete an empty list', () => {
+    const linkedList = new SinglyLinkedList()
+
+    const result = linkedList.delete(_ => true)
+    expect(result).toBe(0)
+  })
+
+  it('Should corretly delete head and other values that match predicate', () => {
+    const linkedList = createMockList<number>(22)
+
+    const result = linkedList.delete(value => (value % 5) === 0)
+    expect(result).toBe(17)
+    expect(linkedList.getFirst().get()).toBe(1)
+    expect(linkedList.toString()).toBe("1, 2, 3, 4, 6, 7, 8, 9, 11, 12, 13, 14, 16, 17, 18, 19, 21")
+  })
+
+  it('Should corretly delete tail and other values that match predicate', () => {
+    const linkedList = createMockList<number>(22)
+
+    const result = linkedList.delete(value => value.toString().includes('1'))
+    expect(result).toBe(10)
+    expect(linkedList.toString()).toBe("0, 2, 3, 4, 5, 6, 7, 8, 9, 20")
+  })
+
+  it('Should corretly delete values that match predicate, except head and tail', () => {
+    const linkedList = createMockList<number>(22)
+
+    const result = linkedList.delete(value => value > 3 && value < 19)
+    expect(result).toBe(7)
+    expect(linkedList.toString()).toBe("0, 1, 2, 3, 19, 20, 21")
   })
 })
