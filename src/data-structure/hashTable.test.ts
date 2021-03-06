@@ -60,14 +60,18 @@ describe('HashTable', () => {
     it('Should correct value even with collision', () => {
       const hashTable = new HashTable(10, null, false)
 
-      hashTable.add(KEYS[3].key, KEYS[3].value)
+      const hash1 = hashTable.hash(KEYS[5].key)
+      const hash2 = hashTable.hash(KEYS[10].key)
+      expect(hash1).toBe(hash2)
+
+      hashTable.add(KEYS[5].key, KEYS[5].value)
       expect(hashTable.length).toBe(1)
 
-      hashTable.add(KEYS[7].key, KEYS[7].value)
+      hashTable.add(KEYS[10].key, KEYS[10].value)
       expect(hashTable.length).toBe(2)
 
-      expect(hashTable.get(KEYS[3].key)).toBe(KEYS[3].value)
-      expect(hashTable.get(KEYS[7].key)).toBe(KEYS[7].value)
+      expect(hashTable.get(KEYS[5].key)).toBe(KEYS[5].value)
+      expect(hashTable.get(KEYS[10].key)).toBe(KEYS[10].value)
     })
 
     it('Should correcly resize the HashTable', () => {
@@ -108,12 +112,26 @@ describe('HashTable', () => {
 
     it('Should return undefined, if dont find key bucket with collision hash', () => {
       const hashTable = new HashTable(10, null, false)
-      hashTable.add(KEYS[3].key, KEYS[3].value)
-      hashTable.add(KEYS[7].key, KEYS[7].value)
 
-      expect(hashTable.get(KEYS[3].key)).toBe(KEYS[3].value)
-      expect(hashTable.get(KEYS[7].key)).toBe(KEYS[7].value)
-      expect(hashTable.get(KEYS[13].key)).toBeUndefined()
+      const hash1 = hashTable.hash(KEYS[0].key)
+      const hash2 = hashTable.hash(KEYS[11].key)
+      const hash3 = hashTable.hash(KEYS[12].key)
+      expect(hash1).toBe(hash2)
+      expect(hash2).toBe(hash3)
+
+      hashTable.add(KEYS[0].key, KEYS[0].value)
+      hashTable.add(KEYS[11].key, KEYS[11].value)
+
+      expect(hashTable.get(KEYS[0].key)).toBe(KEYS[0].value)
+      expect(hashTable.get(KEYS[11].key)).toBe(KEYS[11].value)
+      expect(hashTable.get(KEYS[12].key)).toBeUndefined()
+    })
+
+    it('Should generate a string hash', () => {
+      const hash1 = new HashTable().hash('Sneakers')
+      const hash2 = new HashTable().hash('Sneakers', 31)
+      expect(hash1).toBe(167)
+      expect(hash2).toBe(497)
     })
   })
 
@@ -132,6 +150,21 @@ describe('HashTable', () => {
       expect(removed).toBe(true)
       expect(hashTable.length).toBe(13)
       expect(hashTable.get(KEYS[9].key)).toBeUndefined()
+    })
+
+    it('Should not remove for a non-exist key but with hash collision', () => {
+      const hashTable = new HashTable(10, null, false)
+
+      const hash1 = hashTable.hash(KEYS[0].key)
+      const hash2 = hashTable.hash(KEYS[11].key)
+      expect(hash1).toBe(hash2)
+
+      hashTable.add(KEYS[0].key, KEYS[0].value)
+      expect(hashTable.length).toBe(1)
+      hashTable.remove(KEYS[11].key)
+      expect(hashTable.length).toBe(1)
+
+      expect(hashTable.get(KEYS[0].key)).toBe(KEYS[0].value)
     })
   })
 

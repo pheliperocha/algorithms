@@ -19,7 +19,7 @@ export class HashTable<T> {
   }
 
   // Polynomial rolling hash
-  private hash(key: string, primer: number = 1039): number {
+  hash(key: string, primer: number = 1039): number {
     const m = 1e9 + 9
     let hashValue = 0
     let powerOfP = primer
