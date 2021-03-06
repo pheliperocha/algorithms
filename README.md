@@ -2,20 +2,20 @@
 
 ## Data Structures
 
- - Singly Linked List
+ ✔️ Singly Linked List
  - Doubly Linked List
- - Stack
- - Queue
+ ✔️ Stack
+ ✔️ Queue
+ ✔️ Hash Table
+ - Heap
  - Priority Queue
- - Hash Table
  - Tree
-   - Binary Tree
    - Binary Search Tree
    - AVL Tree
    - Red-black Tree
    - Splay Tree
- - Heap
- - Treap
+    - Treap
+ - B-Tree
  - Tries
  - Graph
 
