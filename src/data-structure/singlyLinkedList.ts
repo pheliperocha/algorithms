@@ -45,21 +45,13 @@ class SinglyLinkedList<T = any> {
   }
 
   // O(n)
-  [Symbol.iterator](): IterableIterator<T> {
+  *[Symbol.iterator](): IterableIterator<T> {
     let node: ListNode = this.head
 
-    return {
-      [Symbol.iterator]: this[Symbol.iterator],
-      next: () => {
-        const value = node.get()
-        const next = node.getNext()
-        node = (next) ? next : new ListNode(undefined)
-
-        return {
-          value: value,
-          done: (value === undefined)
-        }
-      }
+    while(node.get() !== undefined) {
+      const value = node.get()
+      node = node.getNext() || new ListNode(undefined)
+      yield value
     }
   }
 
