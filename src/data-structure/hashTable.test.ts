@@ -18,8 +18,8 @@ describe('HashTable', () => {
     { key: 'Good morning, Vietnam!', value: 'Good morning, Vietnam!' }, //
   ]
 
-  const createPopulatedHashTable = (bucketSize?: number): HashTable<string> => {
-    const hashTable = new HashTable<string>(bucketSize)
+  const createPopulatedHashTable = (bucketSize?: number, automaticallyResize: boolean = false): HashTable<string> => {
+    const hashTable = new HashTable<string>(bucketSize, null, automaticallyResize)
 
     for (const { key, value } of KEYS) {
       hashTable.add(key, value)
@@ -58,7 +58,7 @@ describe('HashTable', () => {
     })
 
     it('Should correct value even with collision', () => {
-      const hashTable = new HashTable(10)
+      const hashTable = new HashTable(10, null, false)
 
       hashTable.add(KEYS[3].key, KEYS[3].value)
       expect(hashTable.length).toBe(1)
@@ -68,6 +68,28 @@ describe('HashTable', () => {
 
       expect(hashTable.get(KEYS[3].key)).toBe(KEYS[3].value)
       expect(hashTable.get(KEYS[7].key)).toBe(KEYS[7].value)
+    })
+
+    it('Should correcly resize the HashTable', () => {
+      const hashTable = createPopulatedHashTable(10)
+      expect(hashTable.capacity).toBe(10)
+      expect(hashTable.length).toBe(14)
+      expect(hashTable.get(KEYS[6].key)).toBe(KEYS[6].value)
+
+      hashTable.resize(20)
+      expect(hashTable.capacity).toBe(20)
+      expect(hashTable.length).toBe(14)
+      expect(hashTable.get(KEYS[6].key)).toBe(KEYS[6].value)
+    })
+
+    it('Should not automatically resize', () => {
+      const hashTable = createPopulatedHashTable(5)
+      expect(hashTable.capacity).toBe(5)
+    })
+
+    it('Should automatically resize', () => {
+      const hashTable = createPopulatedHashTable(5, true)
+      expect(hashTable.capacity).toBe(20)
     })
   })
 
@@ -85,7 +107,7 @@ describe('HashTable', () => {
     })
 
     it('Should return undefined, if dont find key bucket with collision hash', () => {
-      const hashTable = new HashTable(10)
+      const hashTable = new HashTable(10, null, false)
       hashTable.add(KEYS[3].key, KEYS[3].value)
       hashTable.add(KEYS[7].key, KEYS[7].value)
 
@@ -113,4 +135,41 @@ describe('HashTable', () => {
     })
   })
 
+  describe('Loan Factor', () => {
+    it('Should prevent from create a HashTable with LoadFactor less than or equal to 3', () => {
+      const hashTable1 = new HashTable(541, 0.3)
+      expect(hashTable1.loadFactor).toBe(0.3)
+
+      const hashTable2 = new HashTable(541, 0.2999)
+      expect(hashTable2.loadFactor).toBe(0.75)
+
+      const hashTable3 = new HashTable(541, 0.3001)
+      expect(hashTable3.loadFactor).toBe(0.3001)
+    })
+
+    it('Should prevent from create a HashTable with LoadFactor greater than or equal to 1', () => {
+      const hashTable1 = new HashTable(541, 1)
+      expect(hashTable1.loadFactor).toBe(1)
+
+      const hashTable2 = new HashTable(541, 0.9999)
+      expect(hashTable2.loadFactor).toBe(0.9999)
+
+      const hashTable3 = new HashTable(541, 1.001)
+      expect(hashTable3.loadFactor).toBe(0.75)
+    })
+
+    it('Should throw a Error when trying set a LoadFactor less than or equal to 3', () => {
+      const hashTable1 = new HashTable()
+      expect(() => hashTable1.loadFactor = 0.3).not.toThrow()
+      expect(() => hashTable1.loadFactor = 0.2999).toThrow()
+      expect(() => hashTable1.loadFactor = 0.3001).not.toThrow()
+    })
+
+    it('Should throw a Error when trying set a LoadFactor greater than or equal to 1', () => {
+      const hashTable1 = new HashTable()
+      expect(() => hashTable1.loadFactor = 1).not.toThrow()
+      expect(() => hashTable1.loadFactor = 0.9999).not.toThrow()
+      expect(() => hashTable1.loadFactor = 1.001).toThrow()
+    })
+  })
 })
