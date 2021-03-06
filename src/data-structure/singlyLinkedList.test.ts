@@ -196,6 +196,22 @@ describe('Singly Linked List', () => {
     expect(arr).toStrictEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
   })
 
+  it('Should interate over the list calling a callback function', () => {
+    const linkedList = new SinglyLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+    let i = 0
+    linkedList.forEach((value, index) => {
+      expect(value).toBe(i)
+      expect(index).toBe(i)
+      i++
+    })
+  })
+
+  it('Should interate over the list with spread operator', () => {
+    const linkedList = new SinglyLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+    const arr = [...linkedList]
+    expect(arr).toStrictEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+  })
+
   it('Should convert to string with comman separator', () => {
     const linkedList = createMockList(3)
     expect(linkedList.toString()).toBe('0, 1, 2')

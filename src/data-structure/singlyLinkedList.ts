@@ -45,9 +45,11 @@ class SinglyLinkedList<T = any> {
   }
 
   // O(n)
-  [Symbol.iterator]() {
+  [Symbol.iterator](): IterableIterator<T> {
     let node: ListNode = this.head
+
     return {
+      [Symbol.iterator]: this[Symbol.iterator],
       next: () => {
         const value = node.get()
         const next = node.getNext()
@@ -58,6 +60,19 @@ class SinglyLinkedList<T = any> {
           done: (value === undefined)
         }
       }
+    }
+  }
+
+  // O(n)
+  forEach(callbackfn: (value: T, index: number) => void): void {
+    let node: ListNode<T> | undefined = this.head
+    let index = 0
+    let data = node?.get()
+    while (node && data !== undefined) {
+      callbackfn(data, index)
+      node = node.getNext()
+      data = node?.get()
+      index++
     }
   }
 
