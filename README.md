@@ -16,6 +16,7 @@
    - Splay Tree
     - Treap
  - B-Tree
+ - B+Tree
  - Tries
  - Graph
 
