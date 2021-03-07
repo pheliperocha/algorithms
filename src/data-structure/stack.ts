@@ -4,7 +4,7 @@ export class Stack<T = any> {
   private list: SinglyLinkedList<T>
 
   // O(n)
-  constructor(...data: T[]){
+  constructor(...data: T[]) {
     this.list = new SinglyLinkedList(...data.reverse())
   }
 

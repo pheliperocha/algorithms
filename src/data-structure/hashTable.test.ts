@@ -3,28 +3,45 @@ import { HashTable } from './hashTable'
 describe('HashTable', () => {
   const KEYS = [
     { key: 'Star wars', value: 'May the Force be with you.' },
-    { key: 'The Godfather', value: 'I\'m going to make him an offer he can\'t refuse.' },
-    { key: 'Taxi Driver', value: 'You talkin\' to me?' },
+    {
+      key: 'The Godfather',
+      value: "I'm going to make him an offer he can't refuse.",
+    },
+    { key: 'Taxi Driver', value: "You talkin' to me?" },
     { key: 'The Sixth Sense', value: 'I see dead people.' }, //
-    { key: 'Fight Club', value: 'The first rule of Fight Club is: You do not talk about Fight Club.' },
+    {
+      key: 'Fight Club',
+      value:
+        'The first rule of Fight Club is: You do not talk about Fight Club.',
+    },
     { key: 'The Dark Knight', value: 'Why so serious?' },
     { key: 'Toy Story', value: 'To infinity and beyond!' },
     { key: 'Apollo 13', value: 'Houston, we have a problem.' }, //
     { key: 'King Kong', value: 'It was Beauty killed the Beast.' },
     { key: 'Pulp Fiction', value: 'They call it a Royale with cheese.' },
-    { key: '12 Years a Slave', value: 'I don\'t want to survive. I want to live.' },
-    { key: 'Babe', value: 'That\'ll do, pig.That\'ll do.' },
+    {
+      key: '12 Years a Slave',
+      value: "I don't want to survive. I want to live.",
+    },
+    { key: 'Babe', value: "That'll do, pig.That'll do." },
     { key: 'Sherlock Holmes', value: 'Elementary, my dear Watson.' },
     { key: 'Good morning, Vietnam!', value: 'Good morning, Vietnam!' }, //
   ]
 
-  const createPopulatedHashTable = (bucketSize?: number, automaticallyResize: boolean = false): HashTable<string> => {
-    const hashTable = new HashTable<string>(bucketSize, null, automaticallyResize)
+  const createPopulatedHashTable = (
+    bucketSize?: number,
+    automaticallyResize: boolean = false,
+  ): HashTable<string> => {
+    const hashTable = new HashTable<string>(
+      bucketSize,
+      null,
+      automaticallyResize,
+    )
 
     for (const { key, value } of KEYS) {
       hashTable.add(key, value)
     }
-    
+
     return hashTable
   }
 
@@ -193,16 +210,16 @@ describe('HashTable', () => {
 
     it('Should throw a Error when trying set a LoadFactor less than or equal to 3', () => {
       const hashTable1 = new HashTable()
-      expect(() => hashTable1.loadFactor = 0.3).not.toThrow()
-      expect(() => hashTable1.loadFactor = 0.2999).toThrow()
-      expect(() => hashTable1.loadFactor = 0.3001).not.toThrow()
+      expect(() => (hashTable1.loadFactor = 0.3)).not.toThrow()
+      expect(() => (hashTable1.loadFactor = 0.2999)).toThrow()
+      expect(() => (hashTable1.loadFactor = 0.3001)).not.toThrow()
     })
 
     it('Should throw a Error when trying set a LoadFactor greater than or equal to 1', () => {
       const hashTable1 = new HashTable()
-      expect(() => hashTable1.loadFactor = 1).not.toThrow()
-      expect(() => hashTable1.loadFactor = 0.9999).not.toThrow()
-      expect(() => hashTable1.loadFactor = 1.001).toThrow()
+      expect(() => (hashTable1.loadFactor = 1)).not.toThrow()
+      expect(() => (hashTable1.loadFactor = 0.9999)).not.toThrow()
+      expect(() => (hashTable1.loadFactor = 1.001)).toThrow()
     })
   })
 })

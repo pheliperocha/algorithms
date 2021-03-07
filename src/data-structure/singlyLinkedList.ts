@@ -48,7 +48,7 @@ class SinglyLinkedList<T = any> {
   *[Symbol.iterator](): IterableIterator<T> {
     let node: ListNode = this.head
 
-    while(node.get() !== undefined) {
+    while (node.get() !== undefined) {
       const value = node.get()
       node = node.getNext() || new ListNode(undefined)
       yield value
@@ -109,7 +109,7 @@ class SinglyLinkedList<T = any> {
       count++
     }
 
-    return (node) ? node : undefined
+    return node ? node : undefined
   }
 
   // O(1)
@@ -142,7 +142,7 @@ class SinglyLinkedList<T = any> {
     beforeLastItem.setNext(undefined)
     this.tail = beforeLastItem
     this.size--
-    return (lastItem) ? lastItem : undefined
+    return lastItem ? lastItem : undefined
   }
 
   // O(n)
@@ -150,11 +150,11 @@ class SinglyLinkedList<T = any> {
     const newNode = new ListNode(data)
     if (index === 0) {
       this.size++
-      return this.head = this.tail = newNode
+      return (this.head = this.tail = newNode)
     }
-    
+
     const prevItem = this.getAt(index - 1)
-    
+
     if (prevItem === undefined || !prevItem.getNext()) {
       return undefined
     }
@@ -168,10 +168,10 @@ class SinglyLinkedList<T = any> {
   // O(n)
   toString(separator: string = ', '): string {
     let node: ListNode | undefined = this.head
-    
+
     let value = ''
     while (node) {
-      value += (node.hasNext()) ? `${node.get()}${separator}` : node.get()
+      value += node.hasNext() ? `${node.get()}${separator}` : node.get()
       node = node.getNext()
     }
 
@@ -236,6 +236,4 @@ class SinglyLinkedList<T = any> {
   }
 }
 
-export {
-  SinglyLinkedList
-}
+export { SinglyLinkedList }

@@ -1,6 +1,6 @@
 import { SinglyLinkedList } from './singlyLinkedList'
 
-type INode<T> = { key: string, data: T }
+type INode<T> = { key: string; data: T }
 type IBucket<T> = SinglyLinkedList<INode<T>>
 
 export class HashTable<T> {
@@ -10,10 +10,15 @@ export class HashTable<T> {
   private _loadFactor: number
   private _automaticallyResize: boolean
 
-  constructor(capacity?: number | null, loadFactor?: number | null, automaticallyResize: boolean = true) {
+  constructor(
+    capacity?: number | null,
+    loadFactor?: number | null,
+    automaticallyResize: boolean = true,
+  ) {
     this._capacity = capacity || 541
     this._bucketList = new Array<IBucket<T>>(this._capacity)
-    this._loadFactor = (loadFactor && loadFactor >= 0.3 && loadFactor <= 1) ? loadFactor : 0.75
+    this._loadFactor =
+      loadFactor && loadFactor >= 0.3 && loadFactor <= 1 ? loadFactor : 0.75
     this._length = 0
     this._automaticallyResize = automaticallyResize
   }
@@ -25,7 +30,7 @@ export class HashTable<T> {
     let powerOfP = primer
 
     for (const c of key) {
-      hashValue = (hashValue + (c.charCodeAt(0) * powerOfP)) % this._capacity
+      hashValue = (hashValue + c.charCodeAt(0) * powerOfP) % this._capacity
       powerOfP = (powerOfP * primer) % m
     }
 
@@ -34,7 +39,7 @@ export class HashTable<T> {
 
   // O(1)
   private shouldResize(): boolean {
-    return (this._length / this._capacity) >= this.loadFactor
+    return this._length / this._capacity >= this.loadFactor
   }
 
   // O(1)
@@ -90,7 +95,7 @@ export class HashTable<T> {
       return ++this._length
     }
 
-    const nodeFilled = this._bucketList[hash].find(node => node.key === key)
+    const nodeFilled = this._bucketList[hash].find((node) => node.key === key)
 
     if (nodeFilled) {
       nodeFilled.set({ key, data })
@@ -109,7 +114,7 @@ export class HashTable<T> {
 
     if (!this._bucketList[hash]) return undefined
 
-    const result = this._bucketList[hash].find(node => node.key === key)
+    const result = this._bucketList[hash].find((node) => node.key === key)
     return result?.get()?.data
   }
 
@@ -120,7 +125,7 @@ export class HashTable<T> {
     if (!this._bucketList[hash]) return false
 
     const currentSize = this._bucketList[hash].length()
-    const newSize = this._bucketList[hash].delete(value => value.key === key)
+    const newSize = this._bucketList[hash].delete((value) => value.key === key)
     const changed = currentSize - newSize !== 0
     if (changed) --this._length
     return changed
