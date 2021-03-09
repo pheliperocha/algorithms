@@ -72,9 +72,9 @@ describe('Insert', () => {
 
     const compareFn = (tickerA: Ticker, tickerB: Ticker) => {
       if (sectorWeight[tickerA.sector] > sectorWeight[tickerB.sector]) {
-        return true
+        return 1
       }
-      return false
+      return -1
     }
 
     const tree = new BinarySearchTree<Ticker>(compareFn)
