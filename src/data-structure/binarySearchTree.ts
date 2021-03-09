@@ -44,11 +44,22 @@ class Leaf<T> {
   }
 }
 
+export interface ComapreFn<T> {
+  (valueA: T, valueB: T): boolean
+}
+
 export class BinarySearchTree<T> {
   private _root: Leaf<T> | undefined = undefined
   private _lenght: number = 0
 
-  constructor() {}
+  private compareFn: ComapreFn<T> = <T>(valueA: T, valueB: T): boolean => {
+    if (valueA > valueB) return true
+    return false
+  }
+
+  constructor(compareFn?: ComapreFn<T>) {
+    if (compareFn) this.compareFn = compareFn
+  }
 
   get lenght() {
     return this._lenght
@@ -58,15 +69,19 @@ export class BinarySearchTree<T> {
     return this._root
   }
 
-  private insertOnLeaf(leaf: Leaf<T> | undefined, data: T): Leaf<T> {
+  private insertOnLeaf(
+    leaf: Leaf<T> | undefined,
+    data: T,
+    parent?: Leaf<T>,
+  ): Leaf<T> {
     if (!leaf) {
-      return new Leaf(data)
+      return new Leaf(data, parent)
     }
 
-    if (leaf.get() > data) {
-      leaf.left = this.insertOnLeaf(leaf.left, data)
+    if (this.compareFn(leaf.get(), data)) {
+      leaf.left = this.insertOnLeaf(leaf.left, data, leaf)
     } else {
-      leaf.right = this.insertOnLeaf(leaf.right, data)
+      leaf.right = this.insertOnLeaf(leaf.right, data, leaf)
     }
 
     return leaf
