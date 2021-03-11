@@ -5,6 +5,7 @@
   "main": "./src/index.ts",
   "scripts": {
     "test": "jest --no-cache",
+    "test:cov": "jest --coverage",
     "tsc-check": "tsc --noEmit"
   },
   "keywords": [

@@ -145,4 +145,129 @@ describe('Insert', () => {
     expect(leafB?.get().price).toBe(15291)
     expect(leafC?.get()).toBeUndefined()
   })
+
+  it('Should return false when deleting an empty tree', () => {
+    const tree = new BinarySearchTree<number>()
+    const result = tree.delete(2.7182)
+
+    expect(tree.lenght).toBe(0)
+    expect(result).toBeFalsy()
+  })
+
+  it('Should return false when trying to delete a not included value', () => {
+    const tree = new BinarySearchTree<number>()
+    tree.insert(6.626068, 10, -34, 2)
+    const result = tree.delete(1.618)
+
+    expect(tree.lenght).toBe(4)
+    expect(result).toBeFalsy()
+  })
+
+  it('Should delete the leaf that doen\'st have any children', () => {
+    const tree = new BinarySearchTree<number>()
+    tree.insert(5, 2, 13, 3, 1, 8, 21, 0, 34)
+    expect(tree.lenght).toBe(9)
+    const result = tree.delete(34)
+
+    expect(tree.lenght).toBe(8)
+    expect(result).toBeTruthy()
+
+    expect(tree.root?.get()).toBe(5)
+    expect(tree.root?.left?.get()).toBe(2)
+    expect(tree.root?.right?.get()).toBe(13)
+    expect(tree.root?.left?.left?.get()).toBe(1)
+    expect(tree.root?.left?.left?.left?.get()).toBe(0)
+    expect(tree.root?.left?.left?.right?.get()).toBeUndefined()
+    expect(tree.root?.left?.right?.get()).toBe(3)
+    expect(tree.root?.left?.right?.left?.get()).toBeUndefined()
+    expect(tree.root?.left?.right?.right?.get()).toBeUndefined()
+    expect(tree.root?.right?.left?.get()).toBe(8)
+    expect(tree.root?.right?.left?.left?.get()).toBeUndefined()
+    expect(tree.root?.right?.left?.right?.get()).toBeUndefined()
+    expect(tree.root?.right?.right?.get()).toBe(21)
+    expect(tree.root?.right?.right?.left?.get()).toBeUndefined()
+    expect(tree.root?.right?.right?.right?.get()).toBeUndefined()
+  })
+
+  it("Should delete the leaf that have only one child on left", () => {
+    const tree = new BinarySearchTree<number>()
+    tree.insert(5, 2, 13, 3, 1, 8, 21, 0, 34)
+    expect(tree.lenght).toBe(9)
+    const result = tree.delete(1)
+
+    expect(tree.lenght).toBe(8)
+    expect(result).toBeTruthy()
+
+    expect(tree.root?.get()).toBe(5)
+    expect(tree.root?.left?.get()).toBe(2)
+    expect(tree.root?.right?.get()).toBe(13)
+    expect(tree.root?.left?.left?.get()).toBe(0)
+    expect(tree.root?.left?.left?.left?.get()).toBeUndefined()
+    expect(tree.root?.left?.left?.right?.get()).toBeUndefined()
+    expect(tree.root?.left?.right?.get()).toBe(3)
+    expect(tree.root?.left?.right?.left?.get()).toBeUndefined()
+    expect(tree.root?.left?.right?.right?.get()).toBeUndefined()
+    expect(tree.root?.right?.left?.get()).toBe(8)
+    expect(tree.root?.right?.left?.left?.get()).toBeUndefined()
+    expect(tree.root?.right?.left?.right?.get()).toBeUndefined()
+    expect(tree.root?.right?.right?.get()).toBe(21)
+    expect(tree.root?.right?.right?.left?.get()).toBeUndefined()
+    expect(tree.root?.right?.right?.right?.get()).toBe(34)
+  })
+
+  it('Should delete the leaf that have only one child on right', () => {
+    const tree = new BinarySearchTree<number>()
+    tree.insert(5, 2, 13, 3, 1, 8, 21, 0, 34)
+    expect(tree.lenght).toBe(9)
+    const result = tree.delete(21)
+
+    expect(tree.lenght).toBe(8)
+    expect(result).toBeTruthy()
+
+    expect(tree.root?.get()).toBe(5)
+    expect(tree.root?.left?.get()).toBe(2)
+    expect(tree.root?.right?.get()).toBe(13)
+    expect(tree.root?.left?.left?.get()).toBe(1)
+    expect(tree.root?.left?.left?.left?.get()).toBe(0)
+    expect(tree.root?.left?.left?.right?.get()).toBeUndefined()
+    expect(tree.root?.left?.right?.get()).toBe(3)
+    expect(tree.root?.left?.right?.left?.get()).toBeUndefined()
+    expect(tree.root?.left?.right?.right?.get()).toBeUndefined()
+    expect(tree.root?.right?.left?.get()).toBe(8)
+    expect(tree.root?.right?.left?.left?.get()).toBeUndefined()
+    expect(tree.root?.right?.left?.right?.get()).toBeUndefined()
+    expect(tree.root?.right?.right?.get()).toBe(34)
+    expect(tree.root?.right?.right?.left?.get()).toBeUndefined()
+    expect(tree.root?.right?.right?.right?.get()).toBeUndefined()
+  })
+
+  it('Should delete the leaf that have two children', () => {
+    const tree = new BinarySearchTree<number>()
+    tree.insert(5, 2, 13, 3, 1, 8, 21, 0, 34)
+    expect(tree.lenght).toBe(9)
+    const result = tree.delete(13)
+
+    expect(tree.lenght).toBe(8)
+    expect(result).toBeTruthy()
+
+    expect(tree.root?.get()).toBe(5)
+    expect(tree.root?.left?.get()).toBe(2)
+    expect(tree.root?.right?.get()).toBe(21)
+
+    expect(tree.root?.left?.left?.get()).toBe(1)
+    expect(tree.root?.left?.left?.left?.get()).toBe(0)
+    expect(tree.root?.left?.left?.right?.get()).toBeUndefined()
+  
+    expect(tree.root?.left?.right?.get()).toBe(3)
+    expect(tree.root?.left?.right?.left?.get()).toBeUndefined()
+    expect(tree.root?.left?.right?.right?.get()).toBeUndefined()
+
+    expect(tree.root?.right?.left?.get()).toBe(8)
+    expect(tree.root?.right?.left?.left?.get()).toBeUndefined()
+    expect(tree.root?.right?.left?.right?.get()).toBeUndefined()
+  
+    expect(tree.root?.right?.right?.get()).toBe(34)
+    expect(tree.root?.right?.right?.left?.get()).toBeUndefined()
+    expect(tree.root?.right?.right?.right?.get()).toBeUndefined()
+  })
 })

@@ -98,7 +98,7 @@ export class BinarySearchTree<T> {
 
   find(data: Partial<T>): Leaf<T> | undefined {
     let leaf = this._root
-    while(leaf) {
+    while (leaf) {
       if (this.compareFn(leaf.get(), data) === 0) return leaf
       if (this.compareFn(leaf.get(), data) > 0) {
         leaf = leaf.left
@@ -109,5 +109,43 @@ export class BinarySearchTree<T> {
     return undefined
   }
 
-  delete() {}
+  private minLeaf(leaf: Leaf<T>) {
+    let currentLeaf = leaf
+    while (currentLeaf && currentLeaf.left !== undefined) currentLeaf = currentLeaf.left
+    return currentLeaf
+  }
+
+  private deleteLeaf(leaf: Leaf<T>, data: Partial<T>): Leaf<T> | undefined {
+    if (leaf.left && this.compareFn(data, leaf.get()) < 0) {
+      leaf.left = this.deleteLeaf(leaf.left, data)
+    }
+
+    if (leaf.right && this.compareFn(data, leaf.get()) > 0) {
+      leaf.right = this.deleteLeaf(leaf.right, data)
+    }
+
+    if (this.compareFn(data, leaf.get()) === 0) {
+      this._lenght--
+
+      if (leaf.left === undefined) {
+        return leaf.right
+      } else if (leaf.right === undefined) {
+        return leaf.left
+      }
+
+      const temp = this.minLeaf(leaf.right)
+      temp.left = leaf.left
+      leaf = temp
+      leaf.right = (leaf.right) ? this.deleteLeaf(leaf.right, data) : undefined
+    }
+
+    return leaf
+  }
+
+  delete(data: Partial<T>): boolean {
+    if (!this._root) return false
+    const currentLenght = this._lenght
+    this.deleteLeaf(this._root, data)
+    return (this._lenght < currentLenght) ? true : false
+  }
 }
