@@ -1,6 +1,46 @@
 import { BinarySearchTree } from './binarySearchTree'
 
 describe('Insert', () => {
+  enum Sector {
+    ENERGY = 'energy',
+    TECH = 'tech',
+    FINANCIAL = 'financial',
+  }
+
+  type Ticker = { sector: Sector; ticker: string; price: number }
+
+  const stocks: Ticker[] = [
+    { sector: Sector.ENERGY, ticker: 'XOM', price: 6087 },
+    { sector: Sector.FINANCIAL, ticker: 'BRK.B', price: 25761 },
+    { sector: Sector.TECH, ticker: 'GOOGL', price: 200750 },
+    { sector: Sector.ENERGY, ticker: 'CVX', price: 10975 },
+    { sector: Sector.FINANCIAL, ticker: 'JPM', price: 15291 },
+    { sector: Sector.TECH, ticker: 'AMZN', price: 295195 },
+  ]
+
+  const sectorWeight = {
+    [Sector.TECH]: 1,
+    [Sector.ENERGY]: 2,
+    [Sector.FINANCIAL]: 3,
+  }
+
+  const compareFn = (
+    tickerA: Partial<Ticker>,
+    tickerB: Partial<Ticker>,
+  ): number => {
+    if (tickerA.ticker === tickerB.ticker) return 0
+
+    if (
+      tickerA.sector &&
+      tickerB.sector &&
+      sectorWeight[tickerA.sector] > sectorWeight[tickerB.sector]
+    ) {
+      return 1
+    }
+
+    return -1
+  }
+
   it('Should insert in correcly order for numbers', () => {
     const tree = new BinarySearchTree<number>()
     tree.insert(10, 20, 8, 3, 4, 24)
@@ -47,36 +87,6 @@ describe('Insert', () => {
   })
 
   it('Should insert in correcly order for custom object', () => {
-    enum Sector {
-      ENERGY = 'energy',
-      TECH = 'tech',
-      FINANCIAL = 'financial',
-    }
-
-    type Ticker = { sector: Sector; ticker: string; price: number }
-
-    const stocks: Ticker[] = [
-      { sector: Sector.ENERGY, ticker: 'XOM', price: 6087 },
-      { sector: Sector.FINANCIAL, ticker: 'BRK.B', price: 25761 },
-      { sector: Sector.TECH, ticker: 'GOOGL', price: 200750 },
-      { sector: Sector.ENERGY, ticker: 'CVX', price: 10975 },
-      { sector: Sector.FINANCIAL, ticker: 'JPM', price: 15291 },
-      { sector: Sector.TECH, ticker: 'AMZN', price: 295195 },
-    ]
-
-    const sectorWeight = {
-      [Sector.TECH]: 1,
-      [Sector.ENERGY]: 2,
-      [Sector.FINANCIAL]: 3,
-    }
-
-    const compareFn = (tickerA: Ticker, tickerB: Ticker) => {
-      if (sectorWeight[tickerA.sector] > sectorWeight[tickerB.sector]) {
-        return 1
-      }
-      return -1
-    }
-
     const tree = new BinarySearchTree<Ticker>(compareFn)
     tree.insert(...stocks)
 
@@ -87,5 +97,52 @@ describe('Insert', () => {
     expect(tree.root?.right?.get()).toStrictEqual(stocks[1])
     expect(tree.root?.right?.left?.get()).toStrictEqual(stocks[3])
     expect(tree.root?.right?.right?.get()).toStrictEqual(stocks[4])
+  })
+
+  it('Should find the element on tree of numbers', () => {
+    const tree = new BinarySearchTree<number>()
+    tree.insert(3, 14, 15, 9, 2, 65, 35)
+    const leafA = tree.find(3)
+    const leafB = tree.find(35)
+    const leafC = tree.find(9)
+    const leafD = tree.find(33)
+
+    expect(leafA?.get()).toBe(3)
+    expect(leafB?.get()).toBe(35)
+    expect(leafC?.get()).toBe(9)
+    expect(leafD?.get()).toBeUndefined()
+  })
+
+  it('Should find the element on tree of string', () => {
+    const tree = new BinarySearchTree<string>()
+    tree.insert(
+      'Pi',
+      'Eulers number',
+      'Universal parabolic',
+      'Golden angle',
+      'Twin Primes',
+      'Fibonacci',
+      'Kepler–Bouwkamp',
+    )
+    const leafA = tree.find('Golden angle')
+    const leafB = tree.find('Fibonacci')
+    const leafC = tree.find('DeViccis tesseract')
+
+    expect(leafA?.get()).toBe('Golden angle')
+    expect(leafB?.get()).toBe('Fibonacci')
+    expect(leafC?.get()).toBeUndefined()
+  })
+
+  it('Should find the element on a tree of custom object', () => {
+    const tree = new BinarySearchTree<Ticker>(compareFn)
+    tree.insert(...stocks)
+
+    const leafA = tree.find({ sector: Sector.TECH, ticker: 'GOOGL' })
+    const leafB = tree.find({ sector: Sector.FINANCIAL, ticker: 'JPM' })
+    const leafC = tree.find({ sector: Sector.ENERGY, ticker: 'DOFSQ' })
+
+    expect(leafA?.get().price).toBe(200750)
+    expect(leafB?.get().price).toBe(15291)
+    expect(leafC?.get()).toBeUndefined()
   })
 })

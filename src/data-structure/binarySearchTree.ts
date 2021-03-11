@@ -45,7 +45,7 @@ class Leaf<T> {
 }
 
 export interface CompareFn<T> {
-  (valueA: T, valueB: T): number
+  (valueA: Partial<T>, valueB: Partial<T>): number
 }
 
 export class BinarySearchTree<T> {
@@ -96,6 +96,18 @@ export class BinarySearchTree<T> {
     return this._lenght
   }
 
-  find() {}
+  find(data: Partial<T>): Leaf<T> | undefined {
+    let leaf = this._root
+    while(leaf) {
+      if (this.compareFn(leaf.get(), data) === 0) return leaf
+      if (this.compareFn(leaf.get(), data) > 0) {
+        leaf = leaf.left
+      } else {
+        leaf = leaf.right
+      }
+    }
+    return undefined
+  }
+
   delete() {}
 }
